@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCSH ICT Directorate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4A90E2;
+            --primary-dark: #357ABD;
+            --secondary-color: #667eea;
+            --accent-color: #764ba2;
+            --success-color: #4CAF50;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            position: relative;
+            margin: 30px auto;
+            width: 180px;
+            height: 180px;
+            z-index: 10;
+        }
+
+        .logo-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3),
+                        0 0 0 8px rgba(255,255,255,0.3),
+                        0 0 0 16px rgba(255,255,255,0.1);
+            border: 5px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(74,144,226,0.1), transparent);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-circle img {
+            width: 165px;
+            height: 165px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-placeholder {
+            font-size: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        /* For 3 buttons layout on larger screens */
+        @media (min-width: 900px) {
+            .action-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .btn {
+            padding: 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255,107,107,0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(74,144,226,0.4);
+        }
+
+        .btn-feedback {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .btn-feedback:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(76,175,80,0.4);
+        }
+
+        .btn-icon {
+            font-size: 50px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+        }
+
+        .btn:hover .btn-icon {
+            animation: iconSpin 0.6s ease;
+        }
+
+        @keyframes iconSpin {
+            from { transform: rotate(0deg) scale(1); }
+            to { transform: rotate(360deg) scale(1.1); }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1),
+                       -5px -5px 15px rgba(255,255,255,0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74,144,226,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(74,144,226,0.3);
+        }
+
+        .feature-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .info-section {
+            background: linear-gradient(145deg, #E8F4F8, #D1E7F0);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1),
+                        inset -2px -2px 5px rgba(255,255,255,0.7);
+        }
+
+        .info-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-section li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(74,144,226,0.2);
+            color: var(--text-dark);
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .info-section li:hover {
+            padding-left: 10px;
+            color: var(--primary-color);
+        }
+
+        .info-section li:last-child {
+            border-bottom: none;
+        }
+
+        .info-section li::before {
+            content: '✓ ';
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .footer {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 14px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .footer strong {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .emergency-contacts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .contact-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 24px; }
+            .content { padding: 30px 20px; }
+            .welcome-text h2 { font-size: 22px; }
+            .btn { padding: 20px; font-size: 16px; }
+            .features { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+            .logo-container { width: 150px; height: 150px; }
+            .logo-circle { width: 150px; height: 150px; }
+            .logo-circle img { width: 110px; height: 110px; }
+            .emergency-contacts { grid-template-columns: 1fr; }
+            .action-buttons { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { border-radius: 15px; }
+            .action-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>WCSH ICT DIRECTORATE</h1>
+            <p>Worabe Comprehensive Specialized Hospital</p>
+            <p style="margin-top: 8px; font-size: 15px;">Information & Communication Technology</p>
+        </div>
+
+        <div class="logo-container">
+            <div class="logo-circle">
+                <img src="hospital-logo.png" alt="WCSH Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                <span class="logo-placeholder" style="display:none;">🏥</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="welcome-text">
+                <h2>Welcome to ICT Support Portal</h2>
+                <p>We're here to ensure all your technology needs are met efficiently. Report issues instantly and get help from our comprehensive knowledge base.</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="report.html" class="btn btn-primary">
+                    <span class="btn-icon">📝</span>
+                    <span>Report an Issue</span>
+                    <small style="font-size: 13px; opacity: 0.9;">Hardware, Network, Software</small>
+                </a>
+                <a href="faq.html" class="btn btn-secondary">
+                    <span class="btn-icon">💡</span>
+                    <span>Help & FAQ</span>
+                    <small style="font-size: 13px; opacity: 0.9;">Self-Service Solutions</small>
+                </a>
+                <a href="feedback.html" class="btn btn-feedback">
+                    <span class="btn-icon">⭐</span>
+                    <span>Service Feedback</span>
+                    <small style="font-size: 13px; opacity: 0.9;">Rate Our Service</small>
+                </a>
+            </div>
+
+            <div class="info-section">
+                <h3>🛠️ We Can Help With:</h3>
+                <ul>
+                    <li>Computer hardware problems (not working, slow performance)</li>
+                    <li>Network and internet connectivity issues</li>
+                    <li>Software installation and troubleshooting</li>
+                    <li>Printer and scanner problems</li>
+                    <li>Smart TV configuration and issues</li>
+                    <li>Telephone system problems</li>
+                    <li>Email and communication tools</li>
+                    <li>Medical software support (HMIS, etc.)</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>⏱️ Response Times:</h3>
+                <ul>
+                    <li>🔴 High Urgency: 15 minutes average response</li>
+                    <li>🟡 Medium Urgency: 1 hour average response</li>
+                    <li>🟢 Low Urgency: Same day response</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>🚨 For Emergency Issues:</strong></p>
+            <p style="margin-bottom: 20px;">Contact ICT Directly:</p>
+            
+            <div class="emergency-contacts">
+                <div class="contact-box">
+                    <div class="contact-label">ICT Manager</div>
+                    <div class="contact-number">+251-911-566-220</div>
+                </div>
+                <div class="contact-box">
+                    <div class="contact-label">Help Desk</div>
+                    <div class="contact-number">+251-969-903-990</div>
+                </div>
+                <div class="contact-box">
+                    <div class="contact-label">Network Team</div>
+                    <div class="contact-number">+251-923-343-542</div>
+                </div>
+                <div class="contact-box">
+                    <div class="contact-label">Emergency Line</div>
+                    <div class="contact-number">+251-921-330-833</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 25px; font-size: 12px;">
+                © 2026 WCSH ICT Directorate | Serving Healthcare Through Technology
+            </p>
+        </div>
+    </div>
+</body>
+</html>
